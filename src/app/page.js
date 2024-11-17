@@ -18,7 +18,7 @@ export default function Home() {
   const cardWidth = 250; // Width of each card (adjust as needed)
   const visibleCards = 4;
 
-
+  const khaled = "khaled"
   // Function to scroll left
   const addToCart = async (product) => {
     const localCart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -64,6 +64,7 @@ export default function Home() {
   // Function to scroll left
 
   const getdata = async () => {
+
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products`);
       const data = await response.json();
