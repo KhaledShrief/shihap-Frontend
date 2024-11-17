@@ -2,20 +2,201 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes slidein {
+  from {
+    transform: translateX(-60%);
+    opacity: 0;
+    filter: blur(100px);
+
+  }
+  to {
+    transform: translateX(0%);
+    opacity: 1;
+    filter: blur(0px);
+  }
+}
+@keyframes slide {
+  from {
+    transform: translateX(60%);
+    opacity: 0;
+    filter: blur(100px);
+
+  }
+  to {
+    transform: translateX(0%);
+    opacity: 1;
+    filter: blur(0px);
+  }
+}
+@keyframes slideinnav {
+  from {
+    transform: translateX(-60%);
+    opacity: 0;
+    filter: blur(100px);
+
+  }
+  to {
+    transform: translateX(0%);
+    opacity: 1;
+    filter: blur(0px);
+  }
+}
+.animate-slideinnav {
+  animation: slideinnav 700ms   ease-in-out;
+}
+.animate-slide {
+  animation: slide 700ms   forwards;
+}
+@keyframes slidein2 {
+  from {
+    transform: translateX(60%);
+    opacity: 0;
+    filter: blur(100px);
+
+  }
+  to {
+    transform: translateX(0%);
+    opacity: 1;
+    filter: blur(0px);
+
+  }
+}
+@keyframes slideout {
+  from {
+    transform: translateX(0%);
+    opacity: 1;
+    
+  }
+  to {
+    transform: translateX(-70%);
+    opacity: 0;
+    filter: blur(100px);
+  }
+}
+@keyframes slideout2 {
+  from {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(60%);
+    opacity: 0;
+    filter: blur(100px);
+  }
+}
+@keyframes fill1 {
+  0% {
+    width:82%;
+   clip-path: polygon(0 0, 100% 0, 0 200%);
+  }
+  10% {
+    width:100%;
+    /* clip-path: polygon(0 0, 300% 0, 0 300%); */
+  }
+  20% {
+    width:100%;
+    /* clip-path: polygon(0 0, 300% 0, 0 300%); */
+  }
+  30% {
+    width:100%;
+    /* clip-path: polygon(0 0, 300% 0, 0 300%); */
+  }
+  40% {
+    width:100%;
+    /* clip-path: polygon(0 0, 300% 0, 0 300%); */
+  }
+  50% {
+    width:100%;
+    /* clip-path: polygon(0 0, 300% 0, 0 300%); */
+  }
+
+  60% {
+    width:100%;
+  }
+  80% {
+    width:100%;
+  }
+  100% {
+    width:100%;
+    clip-path: polygon(0 0, 200% 0, 0 200%);
+
+  }
+}
+@keyframes fillout {
+  0% {
+    width:100%;
+    clip-path: polygon(0 0, 200% 0, 0 200%);
+  }
+  10% {
+    width:100%;
+    /* clip-path: polygon(0 0, 300% 0, 0 300%); */
+  }
+  20% {
+    width:100%;
+    /* clip-path: polygon(0 0, 300% 0, 0 300%); */
+  }
+  30% {
+    width:100%;
+    /* clip-path: polygon(0 0, 300% 0, 0 300%); */
+  }
+  40% {
+    width:100%;
+    /* clip-path: polygon(0 0, 300% 0, 0 300%); */
+  }
+  50% {
+   
+    width:100%;
+    /* clip-path: polygon(0 0, 300% 0, 0 300%); */
+  }
+
+  60% {
+    width:100%;
+  }
+  70% {
+    width:100%;
+  }
+  80% {
+    width:100%;
+  }
+  90% {
+    width:100%;
+  }
+  100% {
+    width:80%;
+   clip-path: polygon(0 0, 100% 0, 0 200%);
+
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+/* Define the animation class */
+.animate-fill1 {
+  animation: fill1 2s  forwards;
+}
+.animate-fillout {
+  animation: fillout 2s  forwards;
+}
+.animate-slidein {
+  animation: slidein 2s   ease-in-out;
+}
+.animate-slidein2 {
+  animation: slidein2 2s   ease-in-out;
+}
+.animate-slideout {
+  animation: slideout 1s  forwards;
+}
+.animate-slideout2 {
+  animation: slideout2 1s  forwards;
+}
+
+/* card */
+/* Hide scrollbar for Chrome, Safari, and Opera */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge, and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
