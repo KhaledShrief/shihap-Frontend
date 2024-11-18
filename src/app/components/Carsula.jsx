@@ -5,7 +5,7 @@ import { AiOutlineShopping } from "react-icons/ai";
 import { FiShoppingCart } from "react-icons/fi";
 import { IoMdArrowDropleft, IoMdArrowDropright } from "react-icons/io";
 
-const Cards = ({ products, addToCart }) => {
+const Carsula = ({ products, addToCart }) => {
     const [marginLeft, setMarginLeft] = useState(0);
     const [visibleCards, setVisibleCards] = useState(4); // Number of visible cards based on screen width
     const containerRef = useRef(null);
@@ -117,4 +117,4 @@ const Cards = ({ products, addToCart }) => {
     );
 };
 
-export default Cards;
+export default Carsula;

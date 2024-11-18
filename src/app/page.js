@@ -1,14 +1,8 @@
 "use client";
-import { Button } from "@nextui-org/react";
 import { FaWhatsapp } from "react-icons/fa6";
-import { IoMdArrowDropleft } from "react-icons/io";
-import { IoMdArrowDropright } from "react-icons/io";
 import { useEffect, useRef, useState } from 'react';
 import { useToast } from "./contexts/CustomToast";
-import Link from "next/link";
-import { FiShoppingCart } from "react-icons/fi";
-import { AiOutlineShopping } from "react-icons/ai";
-import Cards from "./components/cards";
+import Carsula from "./components/Carsula";
 
 
 export default function Home() {
@@ -91,14 +85,14 @@ export default function Home() {
         </div>
       </section>
       <section className="w-full h-full p-10 flex flex-col gap-1">
-        <Cards products={products} addToCart={addToCart} />
+        <Carsula products={products} addToCart={addToCart} />
       </section>
       <section className="flex flex-col items-center justify-center gap-4 w-full">
         <video className="rounded-lg  object-cover   w-full" src="/care.mp4" autoPlay loop muted></video>
       </section>
 
       <section className="w-full h-full p-10 flex flex-col gap-1">
-        <Cards products={products} addToCart={addToCart} />
+        <Carsula products={products} addToCart={addToCart} />
       </section>
 
       <section className="w-full h-full bg-gray-200">
