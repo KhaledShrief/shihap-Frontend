@@ -33,9 +33,8 @@ const Footer = () => {
     }, []);
     return (<>
         <div className="p-10 w-full bg-[#E8836B] text-red-300 bg-cover h-[500px]  flex flex-col">
-            <img src="/box.png" className="h-[150px] w-[250px] absolute top-[-100px] z-[3] right-5" alt="logo" />
             <section className="w-full h-full flex text-[#ddd]  gap-1">
-                <div className="px-10 h-full w-full flex font-serif text-pretty flex-col gap-5">
+                <div className="px-10 max-lg:px-5 h-full w-full flex font-serif text-pretty flex-col gap-5">
                     <img src="/logo.png" className="h-[100px] w-[100px] " alt="logo" />
                     <p>Inspired by natural beauty, Favelin represents a minimalist, clean approach to local beauty scene.</p>
                     <p>Contact Us on:</p>
@@ -48,7 +47,7 @@ const Footer = () => {
 
                     </div>
                 </div>
-                <div className="px-10 h-full w-full flex font-serif text-pretty flex-col gap-2">
+                <div className="px-10 max-lg:px-5 h-full w-full flex font-serif text-pretty flex-col gap-2">
                     <h1 >Shop</h1>
                     <Link href="/">
                         <h1 className="hover:underline">Home</h1>

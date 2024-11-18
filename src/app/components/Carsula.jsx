@@ -8,6 +8,7 @@ import { IoMdArrowDropleft, IoMdArrowDropright } from "react-icons/io";
 const Carsula = ({ products, addToCart }) => {
     const [marginLeft, setMarginLeft] = useState(0);
     const [visibleCards, setVisibleCards] = useState(4); // Number of visible cards based on screen width
+    const [availbleSwaps, setAvailbleSwaps] = useState(1); // Track available swaps
     const containerRef = useRef(null);
     const touchStartX = useRef(0);
     const cardWidth = 290; // Width of each card
@@ -28,13 +29,29 @@ const Carsula = ({ products, addToCart }) => {
 
     const maxMarginLeft = -(cardWidth * (products.length - visibleCards)); // Max scrollable width
 
+    const updateAvailableSwaps = () => {
+        const swaps = Math.floor(Math.abs(marginLeft) / (cardWidth * visibleCards)) + 1;
+        setAvailbleSwaps(swaps);
+    };
+
     const scrollLeft = () => {
-        setMarginLeft((prevMargin) => Math.min(prevMargin + cardWidth * visibleCards, 0));
+        setMarginLeft((prevMargin) => {
+            const newMargin = Math.min(prevMargin + cardWidth * visibleCards, 0);
+            return newMargin;
+        });
     };
 
     const scrollRight = () => {
-        setMarginLeft((prevMargin) => Math.max(prevMargin - cardWidth * visibleCards, maxMarginLeft));
+        setMarginLeft((prevMargin) => {
+            const newMargin = Math.max(prevMargin - cardWidth * visibleCards, maxMarginLeft);
+            return newMargin;
+        });
     };
+
+    // Update available swaps whenever marginLeft changes
+    useEffect(() => {
+        updateAvailableSwaps();
+    }, [marginLeft, visibleCards]);
 
     // Touch handling for swipe support on mobile
     const handleTouchStart = (e) => {
@@ -106,7 +123,7 @@ const Carsula = ({ products, addToCart }) => {
             <div className="flex flex-col items-center justify-center gap-4 w-full">
                 <div className="flex gap-2 items-center">
                     <IoMdArrowDropleft className="w-8 h-8 text-gray-400 cursor-pointer" onClick={scrollLeft} />
-                    <h1 className="text-[20px] font-semibold text-gray-500 p-5 text-pretty">{products.length}</h1>
+                    <h1 className="text-[20px] font-semibold text-gray-500 p-5 text-pretty">{availbleSwaps} / {products.length}</h1>
                     <IoMdArrowDropright className="w-8 h-8 text-gray-400 cursor-pointer" onClick={scrollRight} />
                 </div>
                 <Link href={`/categories`}>
