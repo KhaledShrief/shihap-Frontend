@@ -109,17 +109,17 @@ const NavigationBar = () => {
                 {isHover === 0 ? (
                     <div className="p-7 h-[10%] gap-5 w-full flex animate-slideinnav">
                         <Link href="/" className="w-fit h-full relative group" onClick={() => setIsHover(-1)}>
-                            <FaHome className="w-[35vh] h-[35vh] flex-[0.2]" />
+                            <FaHome className="w-[35vh] max-lg:w-[10vh] h-[35vh] flex-[0.2]" />
                             <IoArrowUpSharp className="w-8 h-8  rotate-45 absolute bottom-0 right-0 transform transition-transform group-hover:-translate-y-3" />
                         </Link>
                         <div className=" flex justify-between ">
                             {home.map((item, index) => {
                                 return (
-                                    <Link href={item.href} key={index} onClick={() => setIsHover(-1)} className="flex flex-col w-full p-5 h-full justify-between cursor-pointer group hover:underline">
-                                        <h1 className="text-xl font-bold">
+                                    <Link href={item.href} key={index} onClick={() => setIsHover(-1)} className="flex flex-col w-full p-5 h-full justify-between cursor-pointer group hover:underline ">
+                                        <h1 className="text-xl max-lg:text-[5px] font-bold">
                                             {item.title}
                                         </h1>
-                                        <p>
+                                        <p className="max-lg:text-[5px]">
                                             {item.des}
                                         </p>
                                         <IoArrowUpSharp className="w-8 h-8 self-end rotate-45 transform transition-transform group-hover:-translate-y-3" />
@@ -132,17 +132,17 @@ const NavigationBar = () => {
                 ) : isHover === 1 ? (
                     <div className="p-7 h-[10%] gap-5 w-full flex animate-slideinnav">
                         <Link href="/categories" className="w-fit h-full relative group" onClick={() => setIsHover(-1)}>
-                            <GiShop className="w-[35vh] h-[35vh] flex-[0.2]" />
+                            <GiShop className="w-[35vh] h-[35vh] max-lg:w-[10vh] flex-[0.2]" />
                             <IoArrowUpSharp className="w-8 h-8 absolute rotate-45 bottom-0 right-0 transform transition-transform group-hover:-translate-y-3" />
                         </Link>
-                        <div className=" flex justify-between ">
+                        <div className=" flex justify-between max-lg:items-center w-full max-lg:flex-wrap max-lg:w-fit">
                             {categories.map((item, index) => {
                                 return (
-                                    <Link href={item.href} onClick={() => setIsHover(-1)} key={index} className="flex flex-col w-full p-5 h-full justify-between cursor-pointer group hover:underline">
-                                        <h1 className="text-xl font-bold">
+                                    <Link href={item.href} onClick={() => setIsHover(-1)} key={index} className="flex flex-col w-full max-lg:max-w-[70px]  max-lg:h-fit p-5 h-full justify-between cursor-pointer group hover:underline">
+                                        <h1 className="text-xl max-lg:text-[6px] font-bold">
                                             {item.title}
                                         </h1>
-                                        <p>
+                                        <p className="max-lg:text-[5px]">
                                             {item.des}
                                         </p>
                                         <IoArrowUpSharp className="w-8 h-8 self-end rotate-45 transform transition-transform group-hover:-translate-y-3" />
@@ -156,7 +156,7 @@ const NavigationBar = () => {
                 ) : isHover === 2 ? (
                     <div className="p-7 h-[10%] gap-5 w-full flex animate-slideinnav">
                         <Link href="/cart" className="w-fit h-full relative group" onClick={() => setIsHover(-1)}>
-                            <HiMiniShoppingCart className="w-[35vh] h-[35vh] flex-[0.2]" />
+                            <HiMiniShoppingCart className="w-[35vh] h-[35vh] max-lg:w-[10vh] flex-[0.2]" />
                             <IoArrowUpSharp className="w-8 h-8 absolute rotate-45 bottom-0 right-0 transform transition-transform group-hover:-translate-y-3" />
                         </Link>
                         <div className=" flex justify-between ">
@@ -169,24 +169,8 @@ const NavigationBar = () => {
                                 </p>
                                 <IoArrowUpSharp className="w-8 h-8 self-end rotate-45 transform transition-transform group-hover:-translate-y-3" />
                             </div>
-                            <div className="flex flex-col w-full p-5 h-full justify-between cursor-pointer group">
-                                <h1 className="text-xl font-bold">
-                                    Welcome to MK Store
-                                </h1>
-                                <p>
-                                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Architecto perferendis non ratione corporis ab labore consectetur fugit repudiandae perspiciatis cupiditate recusandae, laboriosam atque esse assumenda. Architecto aliquam quidem molestiae quo.
-                                </p>
-                                <IoArrowUpSharp className="w-8 h-8 self-end rotate-45 transform transition-transform group-hover:-translate-y-3" />
-                            </div>
-                            <div className="flex flex-col w-full p-5 h-full justify-between cursor-pointer group">
-                                <h1 className="text-xl font-bold">
-                                    Welcome to MK Store
-                                </h1>
-                                <p>
-                                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Architecto perferendis non ratione corporis ab labore consectetur fugit repudiandae perspiciatis cupiditate recusandae, laboriosam atque esse assumenda. Architecto aliquam quidem molestiae quo.
-                                </p>
-                                <IoArrowUpSharp className="w-8 h-8 self-end rotate-45 transform transition-transform group-hover:-translate-y-3" />
-                            </div>
+
+
                         </div>
                     </div>
                 ) : null}
@@ -247,7 +231,7 @@ const NavigationBar = () => {
                         <div className="w-fit h-fit">
                             {/* <img src="/logo.png" className="h-[60px] w-[100px] max-lg:w-[50px] max-lg:h-[50px] max-lg:absolute max-lg:left-5 max-lg:top-5" alt="logo" /> */}
                         </div>
-                        <div className="flex items-center max-lg:gap-2 gap-10 w-fit h-full">
+                        <div className="flex items-center max-lg:gap-2 gap-10 w-fit max-lg:relative max-lg:left-[-20px] h-full">
                             {items.map((item, index) => (
                                 <Link href={item.href} onClick={() => setIsHover(-1)} key={item.id} className="w-fit h-full">
                                     <div
@@ -261,7 +245,7 @@ const NavigationBar = () => {
                                 </Link>
                             ))}
                         </div>
-                        <div className="flex gap-2">
+                        <div className="flex gap-2 max-lg:relative max-lg:left-[-10px]">
                             {!isLoggedIn ? (
                                 <Link href="/login">
                                     <Button variant="bordered" className="max-lg:ml-2 max-lg:text-[10px] max-lg:w-[10px] max-lg:h-[30px]">Sign In</Button>
