@@ -1,3 +1,4 @@
+
 import { Button } from "@nextui-org/react";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
@@ -7,36 +8,44 @@ import { IoMdArrowDropleft, IoMdArrowDropright } from "react-icons/io";
 
 const Carsula = ({ products, addToCart }) => {
     const [marginLeft, setMarginLeft] = useState(0);
-    const [visibleCards, setVisibleCards] = useState(4); // Number of visible cards based on screen width
-    const [availbleSwaps, setAvailbleSwaps] = useState(1); // Track available swaps
+    const [visibleCards, setVisibleCards] = useState(4);
+    const [availbleSwaps, setAvailbleSwaps] = useState(1);
+    const [maxSwaps, setMaxSwaps] = useState(products.length > 0 ? Math.ceil(products.length / visibleCards) : 1);
     const containerRef = useRef(null);
     const touchStartX = useRef(0);
-    const cardWidth = 290; // Width of each card
 
-    // Adjust visible cards based on window width
+    const updateVisibleCards = () => {
+        const windowWidth = window.innerWidth;
+        if (windowWidth >= 1024) {
+            setVisibleCards(4); // Desktop
+        } else if (windowWidth >= 768) {
+            setVisibleCards(2); // Tablet
+        } else {
+            setVisibleCards(1); // Mobile
+        }
+        if (products.length > 0) {
+            setMaxSwaps(Math.ceil(products.length / visibleCards));
+        }
+    };
+
     useEffect(() => {
-        const updateVisibleCards = () => {
-            const windowWidth = window.innerWidth;
-            if (windowWidth >= 1024) setVisibleCards(4); // Desktop
-            else if (windowWidth >= 768) setVisibleCards(2); // Tablet
-            else setVisibleCards(1); // Mobile
-        };
-
         updateVisibleCards();
         window.addEventListener("resize", updateVisibleCards);
         return () => window.removeEventListener("resize", updateVisibleCards);
-    }, []);
+    }, [products]);
 
-    const maxMarginLeft = -(cardWidth * (products.length - visibleCards)); // Max scrollable width
+    const cardWidth = containerRef.current ? containerRef.current.clientWidth / visibleCards : 290;
+    const maxMarginLeft = -(cardWidth * (products.length - visibleCards));
 
     const updateAvailableSwaps = () => {
-        const swaps = Math.floor(Math.abs(marginLeft) / (cardWidth * visibleCards)) + 1;
-        setAvailbleSwaps(swaps);
+        const swaps = Math.ceil(Math.abs(marginLeft) / cardWidth) + 1;
+        setAvailbleSwaps(Math.min(swaps, maxSwaps));
     };
 
     const scrollLeft = () => {
         setMarginLeft((prevMargin) => {
             const newMargin = Math.min(prevMargin + cardWidth * visibleCards, 0);
+            updateAvailableSwaps();
             return newMargin;
         });
     };
@@ -44,16 +53,17 @@ const Carsula = ({ products, addToCart }) => {
     const scrollRight = () => {
         setMarginLeft((prevMargin) => {
             const newMargin = Math.max(prevMargin - cardWidth * visibleCards, maxMarginLeft);
+            updateAvailableSwaps();
             return newMargin;
         });
     };
 
-    // Update available swaps whenever marginLeft changes
     useEffect(() => {
-        updateAvailableSwaps();
-    }, [marginLeft, visibleCards]);
+        if (products.length > 0) {
+            updateAvailableSwaps();
+        }
+    }, [marginLeft, visibleCards, products]);
 
-    // Touch handling for swipe support on mobile
     const handleTouchStart = (e) => {
         touchStartX.current = e.touches[0].clientX;
     };
@@ -62,7 +72,6 @@ const Carsula = ({ products, addToCart }) => {
         const touchEndX = e.changedTouches[0].clientX;
         const swipeDistance = touchEndX - touchStartX.current;
 
-        // If swipe distance is enough for one card, move the cards accordingly
         if (swipeDistance > cardWidth / 2) {
             scrollLeft();
         } else if (swipeDistance < -cardWidth / 2) {
@@ -80,7 +89,7 @@ const Carsula = ({ products, addToCart }) => {
                 onTouchEnd={handleTouchEnd}
             >
                 <div
-                    className="flex gap-5 transition-all duration-300 ease-in-out"
+                    className="flex gap-5 transition-all duration-500 ease-in-out"
                     style={{ marginLeft: `${marginLeft}px` }}
                 >
                     {products.map((card) => (
@@ -123,7 +132,13 @@ const Carsula = ({ products, addToCart }) => {
             <div className="flex flex-col items-center justify-center gap-4 w-full">
                 <div className="flex gap-2 items-center">
                     <IoMdArrowDropleft className="w-8 h-8 text-gray-400 cursor-pointer" onClick={scrollLeft} />
-                    <h1 className="text-[20px] font-semibold text-gray-500 p-5 text-pretty">{availbleSwaps} / {products.length}</h1>
+                    {products.length > 0 ? (
+                        <h1 className="text-[20px] font-semibold text-gray-500 p-5 text-pretty">
+                            {availbleSwaps} / {visibleCards === 1 ? products.length : maxSwaps}
+                        </h1>
+                    ) : (
+                        <h1 className="text-[20px] font-semibold text-gray-500 p-5 text-pretty">Loading...</h1>
+                    )}
                     <IoMdArrowDropright className="w-8 h-8 text-gray-400 cursor-pointer" onClick={scrollRight} />
                 </div>
                 <Link href={`/categories`}>

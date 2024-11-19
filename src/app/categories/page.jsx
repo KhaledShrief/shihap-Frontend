@@ -118,7 +118,7 @@ const Categories = () => {
                             placeholder="Search By Name..."
                         />
                     </div>
-                    <div className="flex gap-2 items-center p-5 w-full max-w-full overflow-x-auto justify-center h-fit">
+                    <div className="flex gap-2 items-center p-5 w-full max-w-full overflow-x-auto justify-center max-lg:justify-start h-fit">
                         {filters.map((filter) => (
                             <Button
                                 key={filter.id}

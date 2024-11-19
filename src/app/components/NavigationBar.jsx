@@ -116,7 +116,7 @@ const NavigationBar = () => {
                             {home.map((item, index) => {
                                 return (
                                     <Link href={item.href} key={index} onClick={() => setIsHover(-1)} className="flex flex-col w-full p-5 h-full justify-between cursor-pointer group hover:underline ">
-                                        <h1 className="text-xl max-lg:text-[5px] font-bold">
+                                        <h1 className="text-xl max-lg:text-[10px] font-bold">
                                             {item.title}
                                         </h1>
                                         <p className="max-lg:text-[5px]">
@@ -139,7 +139,7 @@ const NavigationBar = () => {
                             {categories.map((item, index) => {
                                 return (
                                     <Link href={item.href} onClick={() => setIsHover(-1)} key={index} className="flex flex-col w-full max-lg:max-w-[70px]  max-lg:h-fit p-5 h-full justify-between cursor-pointer group hover:underline">
-                                        <h1 className="text-xl max-lg:text-[6px] font-bold">
+                                        <h1 className="text-xl max-lg:text-[10px] font-bold">
                                             {item.title}
                                         </h1>
                                         <p className="max-lg:text-[5px]">

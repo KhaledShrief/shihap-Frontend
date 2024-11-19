@@ -107,20 +107,17 @@ const Counter = ({ quantity, id, cart, setCart, mainId }) => {
 
 
     return (
-        <main className="w-fit flex items-center gap-2">
-            <p>Quantity :</p>
-            <div className="flex min-w-[100px] w-fit h-fit p-1 border-1 rounded-md border-white">
-                <button className="flex-[0.2] h-full cursor-pointer p-1" onClick={decrement}>
-                    <p className="text-center">-</p>
-                </button>
-                <div className="flex-[0.6] h-full justify-center p-1">
-                    <p className="text-center">{quantity}</p>
-                </div>
-                <button className="flex-[0.2] h-full cursor-pointer p-1" onClick={increment}>
-                    <p className="text-center">+</p>
-                </button>
+        <div className="flex min-w-[100px] gap-10 w-fit h-fit p-1 border-1 rounded-md text-gray-500 border-gray-500">
+            <button className="flex-[0.2] h-full cursor-pointer p-1" onClick={decrement}>
+                <p className="text-center">-</p>
+            </button>
+            <div className="flex-[0.6] h-full justify-center p-1">
+                <p className="text-center">{quantity}</p>
             </div>
-        </main>
+            <button className="flex-[0.2] h-full cursor-pointer p-1" onClick={increment}>
+                <p className="text-center">+</p>
+            </button>
+        </div>
     );
 };
 

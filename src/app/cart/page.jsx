@@ -4,6 +4,7 @@ import { Button } from "@nextui-org/react";
 import { GiEmptyWoodBucketHandle } from "react-icons/gi";
 import Link from "next/link";
 import Counter from "../components/Counter";
+import { FaRegTrashCan } from "react-icons/fa6";
 
 const Cart = () => {
     const [cart, setCart] = useState([]);
@@ -78,55 +79,70 @@ const Cart = () => {
         setTotal(newTotal);
     }, [cart]);
     return (
-        <div className="h-full w-full bg-zinc-900 flex max-lg:flex-col-reverse pt-[80px] bg-[url('/shopping.avif')] bg-cover">
-            <div className="w-full h-full flex-[0.8] p-5 flex-col gap-3 text-white flex ">
+        <div className="h-full w-full  flex flex-col pt-[80px] items-center ">
+            <div className="w-[70%] h-full max-lg:w-full bg-white p-5 flex-col gap-3  justify-center text-black flex ">
+                <div className="w-full h-fit  max-lg:px-10 p-5 flex justify-between items-center">
+                    <h1 className="text-5xl font-serif text-gray-700"> Your Cart</h1>
+                    <Link href="/" className="text-[#E8836B] underline text-2xl font-serif">Continue Shopping</Link>
+                </div>
+                <div className="w-full h-fit  flex justify-between items-center">
+                    <div className="flex-[0.75] px-2  font-extralight  flex justify-between">
+                        <h1 className="  text-gray-500">Product</h1>
+                        <h1 className="  text-gray-500">Quantity</h1>
+                    </div>
+                    <div className="flex-[0.25]  flex justify-end">
+
+                        <h1 className=" font-extralight text-gray-500">Total</h1>
+                    </div>
+                </div>
+                <hr />
                 {cart?.length > 0 ? cart.map((item) => (
-                    <div key={item._id} className="rounded-xl w-full shadow-2xl shadow-white bg-[#E8836B] bg-cover h-fit flex">
-                        <img src={item.imageUrl} alt={item.name} className="w-[32vh] max-lg:w-[18vh] rounded-tl-lg rounded-bl-lg h-full" />
-                        <div className="p-2 flex justify-between w-full">
-                            <div className="flex-col p-2 h-full w-[80%] flex gap-5">
-                                <h1 className="text-lg">{item.name}</h1>
-                                <div className="w-full h-full max-h-[80%] max-w-[80%] overflow-y-auto scrollbar-hide">
-                                    <p>{item.description}</p>
+                    <div key={item._id} className="flex flex-col gap-5">
+                        <div className="rounded-xl w-full shadow-2xl shadow-white bg-[white] bg-cover h-fit flex">
+                            <img src={item.imageUrl} alt={item.name} className=" aspect-square w-[20vh] max-lg:w-[10vh]  rounded-lg h-[20vh]" />
+                            <div className="p-2 flex justify-between  w-full">
+                                <div className=" p-2 h-full max-lg:flex-col  flex  flex-[0.8]">
+                                    <div className="w-full h-full max-h-[80%] max-w-[80%] overflow-y-auto scrollbar-hide">
+                                        <h1 className="text-medium text-gray-500 font-semibold">{item.name}</h1>
+                                        <p className="text-medium text-gray-500 font-sans">LE {item.price}.00</p>
+                                    </div>
+                                    <div className="flex h-full w-fit items-center gap-2">
+
+                                        <Counter mainId={item.mainId} quantity={item.quantity} id={item._id} cart={cart} setCart={setCart} />
+                                        <button className=" bg-[#E8836B] h-fit w-fit p-3 px-3 rounded-md  text-white" onClick={() => handleRemoveItem(!isLoggedIn ? item._id : item.mainId)}>
+                                            <FaRegTrashCan />
+                                        </button>
+                                    </div>
                                 </div>
-                                {/* <p>Quantity: {item.quantity}</p> */}
-                                <Counter mainId={item.mainId} quantity={item.quantity} id={item._id} cart={cart} setCart={setCart} />
+                                <div className="w-fit flex h-full flex-[0.2] justify-end items-center py-3">
+                                    <p className="text-lg text-gray-500 font-sans">LE {item.price * item.quantity}.00</p>
+
+                                </div>
                             </div>
-                            <div className="w-fit flex flex-col justify-between py-3">
-                                <p className="text-lg">{item.price} EGP</p>
-                                <Button variant="shadow" color="danger" onClick={() => handleRemoveItem(!isLoggedIn ? item._id : item.mainId)}>
-                                    Remove
-                                </Button>
-                            </div>
+                        </div>
+                        <div className="w-full h-fit flex justify-center">
+
+                            <hr className="w-[80%]" />
                         </div>
                     </div>
                 )) : <div className="w-full h-[300px] font-bold flex justify-center items-center">
-                    <h1 className="text-center text-5xl flex"><GiEmptyWoodBucketHandle />Your cart is empty<GiEmptyWoodBucketHandle />
+                    <h1 className="text-center text-5xl text-gray-500 flex"><GiEmptyWoodBucketHandle />Your cart is empty<GiEmptyWoodBucketHandle />
                     </h1>
                 </div>}
-            </div>
-            <div className="w-full py-10 px-3 flex-[0.2] text-white">
-                <div className="w-[95%] p-2 flex flex-col gap-3 h-fit border-1 border-gray-500 sticky top-24 rounded-lg">
-                    {cart?.length > 0 ? cart.map((item) => (
-                        <div key={item._id} className="flex w-full h-fit justify-between">
-                            <p>{item.name}</p>
-                            <p>LE {item.price * item.quantity}.00 EGP</p>
+                <div className="w-full flex py-10 px-3 flex-[0.2] text-black justify-end">
+                    <div className="w-fit p-2 flex flex-col items-end gap-3 h-fit sticky top-24 rounded-lg">
+                        <div className="text-xl  text-gray-500 w-full h-fit justify-end font-sans font-medium flex gap-5"><p>Estimated total</p> LE {total}.00 EGP</div>
+                        <div className="flex w-full h-fit justify-between">
+                            <p className="text-medium font-semibold text-gray-500 font-sans">Tax included. Shipping and discounts calculated at checkout.</p>
                         </div>
-                    )) : <h1>cart is empty</h1>}
-                    <div className="flex w-full h-fit justify-between">
-                        <p>Shipping Fees will be applied according to the governorate</p>
-                        <div className="flex items-center flex-nowrap">E£ <p>00.00</p></div>
-                    </div>
-                    <div className="flex justify-between px-3 w-full h-fit font-bold">
-                        <p>Total</p>
-                        <div className="flex items-center flex-nowrap">E£ <p>{total}.00</p></div>
-                    </div>
-                    <Link href={`/buy`} className="h-fit w-full  flex">
-                        <Button variant="solid" disabled={cart.length === 0} className={`${cart.length === 0 ? "cursor-not-allowed opacity-[0.5] hover:opacity-[0.2]" : " cursor-pointer opacity-[1]"} bg-[#E8836B] text-[#fff] p-6 font-serif w-full`}>Buy Now</Button>
-                    </Link>
+                        <Link href={`/buy`} className="h-fit w-full  flex">
+                            <Button variant="solid" disabled={cart.length === 0} className={`${cart.length === 0 ? "cursor-not-allowed opacity-[0.5] hover:opacity-[0.2]" : " cursor-pointer opacity-[1]"} bg-[#E8836B] text-[#fff] p-6 font-serif w-full`}>Buy Now</Button>
+                        </Link>
 
+                    </div>
                 </div>
             </div>
+
         </div>
     );
 };

@@ -119,7 +119,7 @@ const LoginPage = () => {
 
     return (
         <div className="p-28 max-lg:p-0 max-lg:py-28 flex justify-center items-center  bg-[url('/two.jpg')] bg-cover h-full w-full">
-            <div className="h-[500px] max-lg:h-[300px] w-[70%] max-lg:w-full rounded-lg flex relative shadow-2xl shadow-blue-700  bg-gray-300 items-center ">
+            <div className="h-[500px] max-lg:h-[300px] w-[70%] max-lg:w-[90%] rounded-lg flex relative shadow-2xl shadow-blue-700  bg-gray-300 items-center ">
                 <div className={`rounded-lg  p-10 flex left-0 w-[80%] max-lg:p-[15px] max-lg:max-w-[100%] h-full bg-[url('/shopping.avif')] ${active ? "animate-fill1 max-lg:min-w-full" : "animate-fillout"} bg-cover`} style={{ clipPath: "polygon(0 0, 100% 0, 0 200%)" }}>
                     <div className={`flex flex-col justify-center w-[50%] absolute ${active ? "animate-slideout" : "animate-slidein"} h-fit text-white `}>
                         <h1 className="text-3xl font-extrabold  max-lg:text-[15px]" >WELCOME {mounted ? "BACK" : ""}</h1>
