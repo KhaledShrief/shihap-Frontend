@@ -16,7 +16,7 @@ export const ToastProvider = ({ children }) => {
             localStorage.removeItem("toastMessage"); // Clear it from local storage
             setTimeout(() => {
                 setIsVisible(false); // Hide after 5 seconds
-            }, 10000);
+            }, 5000);
         }
     }, []);
 
@@ -24,7 +24,7 @@ export const ToastProvider = ({ children }) => {
         setToastMessage(message);
         setIsVisible(true); // Show toast
         localStorage.setItem("toastMessage", message); // Save to local storage
-        setTimeout(() => setIsVisible(false), 10000); // Clear toast after 3 seconds
+        setTimeout(() => setIsVisible(false), 5000); // Clear toast after 3 seconds
     };
 
     const closeToast = () => {
