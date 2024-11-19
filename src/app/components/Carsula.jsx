@@ -34,7 +34,7 @@ const Carsula = ({ products, addToCart }) => {
         return () => window.removeEventListener("resize", updateVisibleCards);
     }, [products]);
 
-    const cardWidth = containerRef.current ? containerRef.current.clientWidth / visibleCards : 290;
+    const cardWidth = containerRef.current ? containerRef.current.clientWidth / visibleCards : 275;
     const maxMarginLeft = -(cardWidth * (products.length - visibleCards));
 
     const updateAvailableSwaps = () => {
@@ -43,20 +43,23 @@ const Carsula = ({ products, addToCart }) => {
     };
 
     const scrollLeft = () => {
+        const swipeDistance = window.innerWidth < 768 ? 290 : cardWidth * visibleCards; // 2px on mobile, card width on larger screens
         setMarginLeft((prevMargin) => {
-            const newMargin = Math.min(prevMargin + cardWidth * visibleCards, 0);
+            const newMargin = Math.min(prevMargin + swipeDistance, 0);
             updateAvailableSwaps();
             return newMargin;
         });
     };
 
     const scrollRight = () => {
+        const swipeDistance = window.innerWidth < 768 ? 290 : cardWidth * visibleCards; // 2px on mobile, card width on larger screens
         setMarginLeft((prevMargin) => {
-            const newMargin = Math.max(prevMargin - cardWidth * visibleCards, maxMarginLeft);
+            const newMargin = Math.max(prevMargin - swipeDistance, maxMarginLeft);
             updateAvailableSwaps();
             return newMargin;
         });
     };
+
 
     useEffect(() => {
         if (products.length > 0) {
