@@ -43,7 +43,7 @@ const Carsula = ({ products, addToCart }) => {
     };
 
     const scrollLeft = () => {
-        const swipeDistance = window.innerWidth < 768 ? 290 : cardWidth * visibleCards; // 2px on mobile, card width on larger screens
+        const swipeDistance = window.innerWidth < 768 ? 290 : cardWidth * visibleCards; // Adjust swipe distance based on screen size
         setMarginLeft((prevMargin) => {
             const newMargin = Math.min(prevMargin + swipeDistance, 0);
             updateAvailableSwaps();
@@ -52,13 +52,21 @@ const Carsula = ({ products, addToCart }) => {
     };
 
     const scrollRight = () => {
-        const swipeDistance = window.innerWidth < 768 ? 290 : cardWidth * visibleCards; // 2px on mobile, card width on larger screens
+        const swipeDistance = window.innerWidth < 768 ? 290 : cardWidth * visibleCards;
         setMarginLeft((prevMargin) => {
             const newMargin = Math.max(prevMargin - swipeDistance, maxMarginLeft);
+
+            // Prevent extra scroll by stopping exactly at the last card
+            if (Math.abs(newMargin) >= Math.abs(maxMarginLeft)) {
+                return maxMarginLeft;
+            }
+
             updateAvailableSwaps();
             return newMargin;
         });
     };
+
+
 
 
     useEffect(() => {
@@ -92,7 +100,7 @@ const Carsula = ({ products, addToCart }) => {
                 onTouchEnd={handleTouchEnd}
             >
                 <div
-                    className="flex gap-5 transition-all duration-500 ease-in-out"
+                    className="flex gap-5 transition-all w-fit duration-500 ease-in-out"
                     style={{ marginLeft: `${marginLeft}px` }}
                 >
                     {products.map((card) => (
