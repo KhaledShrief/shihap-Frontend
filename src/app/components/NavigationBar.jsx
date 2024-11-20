@@ -1,20 +1,22 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FaHome } from "react-icons/fa";
 import { HiMiniShoppingCart } from "react-icons/hi2";
 import { IoArrowUpSharp } from "react-icons/io5";
-import { GiShop } from "react-icons/gi";
+import { GiEmptyWoodBucketHandle, GiShop } from "react-icons/gi";
 import { Button } from "@nextui-org/react";
 import { useToast } from "../contexts/CustomToast";
+import { PiTrashSimpleThin } from "react-icons/pi";
+import { CartContext } from "../contexts/CartProvider";
 
 const NavigationBar = () => {
     const [isHover, setIsHover] = useState(-1);
     const [mounted, setMounted] = useState(-2);
-    const [user, setUser] = useState({});
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    // const isLoggedIn = typeof window !== "undefined" && Boolean(localStorage.getItem("token")); // Check if token exists
     const { showToast } = useToast(); // Access showToast from context
+    const { cart, setCart } = useContext(CartContext);
+    const [isDragging, setIsDragging] = useState(false);
 
     useEffect(() => {
         setIsLoggedIn(Boolean(localStorage.getItem("token")));
@@ -26,22 +28,96 @@ const NavigationBar = () => {
     const leave = () => {
         setIsHover(-1);
     };
-    const fetchUser = async () => {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/user`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem("token")}`
-            },
-        });
-        if (response.ok) {
-            const data = await response.json();
-            setUser(data.user);
+    // cartContent
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (token) {
+
+            const fetchUserCart = async () => {
+                try {
+                    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/user`, {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
+                    const data = await response.json();
+                    const cartsData = data != [] ? data.user?.cart.map((item) => {
+                        return {
+                            _id: item.product._id,
+                            name: item.product.name,
+                            price: item.product.price,
+                            imageUrl: item.product.imageUrl,
+                            description: item.product.description,
+                            quantity: item.quantity,
+                            mainId: item._id
+                        }
+                    })
+                        : [];
+                    setCart(cartsData);
+                } catch (error) {
+                    console.error("Error fetching cart:", error);
+                }
+            };
+
+            if (isLoggedIn) fetchUserCart();
+        } else {
+            const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
+            setCart(storedCart);
+        }
+    }, [isLoggedIn, isHover]);
+
+
+    const handleRemoveItem = async (cartItemId) => {
+        const token = localStorage.getItem("token");
+        if (token) {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/cart/${cartItemId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+            });
+
+            if (response.ok) {
+                const updatedCart = cart.filter(item => item.mainId !== cartItemId);
+                setCart(updatedCart);
+                localStorage.setItem("cart", JSON.stringify(updatedCart));
+            } else {
+                console.error("Failed to delete item:", response.status);
+            }
+        } else {
+            const updatedCart = cart.filter(item => item._id !== cartItemId);
+            setCart(updatedCart);
+            localStorage.setItem("cart", JSON.stringify(updatedCart));
         }
     };
-    useEffect(() => {
-        fetchUser();
-    }, []);
+
+    const handleDragStart = (e, item) => {
+        e.dataTransfer.setData("cartItemId", item.mainId || item._id);
+        setIsDragging(true); // Start rotation
+    };
+
+    const handleDragOver = (e) => {
+        e.preventDefault(); // Allow drop
+
+    };
+
+    const handleDragEnd = () => {
+        setIsDragging(false); // Stop rotation
+    };
+    const handleDrop = async (e) => {
+        e.preventDefault();
+        const cartItemId = e.dataTransfer.getData("cartItemId");
+        await handleRemoveItem(cartItemId); // Call your remove item function
+        setIsDragging(false); // Stop rotation
+
+    };
+
+
+
+    // cartContent
+    console.log(cart, "navCart")
 
     const home = [
         {
@@ -159,16 +235,26 @@ const NavigationBar = () => {
                             <HiMiniShoppingCart className="w-[35vh] h-[35vh] max-lg:w-[10vh] flex-[0.2]" />
                             <IoArrowUpSharp className="w-8 h-8 absolute rotate-45 bottom-0 right-0 transform transition-transform group-hover:-translate-y-3" />
                         </Link>
-                        <div className=" flex justify-between ">
-                            <div className="flex flex-col w-full p-5 h-full justify-between cursor-pointer group">
-                                <h1 className="text-xl font-bold">
-                                    Welcome to MK Store
-                                </h1>
-                                <p>
-                                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Architecto perferendis non ratione corporis ab labore consectetur fugit repudiandae perspiciatis cupiditate recusandae, laboriosam atque esse assumenda. Architecto aliquam quidem molestiae quo.
-                                </p>
-                                <IoArrowUpSharp className="w-8 h-8 self-end rotate-45 transform transition-transform group-hover:-translate-y-3" />
-                            </div>
+                        <div className=" flex overflow-x-auto w-full p-5 items-center gap-10">
+                            {cart.length > 0 ? cart.map((item) => (
+                                <div
+                                    key={item._id}
+                                    className="w-fit h-fit shrink-0"
+                                    draggable
+                                    onDragStart={(e) => handleDragStart(e, item)}
+                                    onDragEnd={handleDragEnd} // Reset rotation when dragging stops
+
+                                >
+                                    <p className="text-gray-500 font-bold text-center">Drag Me</p>
+                                    <p className="text-gray-500 font-extralight text-center">Quantity: {item.quantity}</p>
+                                    <img
+                                        src={item.imageUrl}
+                                        alt={item.name}
+                                        className="cursor-grab border-[#E8836B] border-2 aspect-square w-[20vh] max-lg:w-[10vh] max-lg:h-[10vh] rounded-lg h-[20vh]"
+                                    />
+                                </div>
+                            )) : <div className="w-full flex justify-center"><h1 className="text-center text-5xl text-gray-500 flex"><GiEmptyWoodBucketHandle />Your cart is empty<GiEmptyWoodBucketHandle /></h1></div>}
+
 
 
                         </div>
@@ -221,9 +307,22 @@ const NavigationBar = () => {
         <div className="relative">
             {/* Background overlay that applies blur and darkening effect */}
             <div
-                className={`fixed inset-0 z-[5] bg-gray-300  bg-opacity-70 backdrop-blur-md transition-all duration-300 ease-in-out ${isHover === mounted ? 'visible opacity-100' : 'invisible opacity-0'
+                className={`fixed flex justify-center p-20 items-end inset-0 z-[5] bg-gray-300  bg-opacity-70 backdrop-blur-md transition-all duration-300 ease-in-out ${isHover === mounted ? 'visible opacity-100' : 'invisible opacity-0'
                     }`}
-            ></div>
+                onDragOver={handleDragOver}
+                onDrop={handleDrop}
+            >
+                {isHover === 2 && cart.length > 0 && (
+                    <div className="w-fit h-fit flex flex-col items-center animate-slideinnav">
+                        <div
+                            className={`w-[5vh] bg-red-600 relative top-[9px] h-[3px] transition-transform duration-300 ${isDragging ? "rotate-[90deg] top-[-15px]" : "rotate-0 top-[9px]"
+                                }`}
+                        ></div>
+                        <PiTrashSimpleThin className={`text-red-600 w-[20vh] h-[10vh] transition-transform duration-300 ${isDragging ? "rotate-[-45deg]" : "rotate-0"}`} />
+                    </div>
+                )}
+
+            </div>
 
             <div className="w-full fixed top-0 z-[10]">
                 <nav className="w-full h-[80px] bg-white text-[#E8836B] flex flex-col px-20  ">

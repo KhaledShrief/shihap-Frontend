@@ -1,13 +1,15 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Button } from "@nextui-org/react";
 import { GiEmptyWoodBucketHandle } from "react-icons/gi";
 import Link from "next/link";
 import Counter from "../components/Counter";
 import { FaRegTrashCan } from "react-icons/fa6";
+import { CartContext } from "../contexts/CartProvider";
 
 const Cart = () => {
-    const [cart, setCart] = useState([]);
+    const { cart, setCart } = useContext(CartContext);
+
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [total, setTotal] = useState(0);
 

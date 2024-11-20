@@ -4,6 +4,7 @@ import Provider from "./Provider";
 import NavigationBar from "./components/NavigationBar";
 import Footer from "./components/Footer";
 import { ToastProvider } from "./contexts/CustomToast";
+import { CartProvider } from "./contexts/CartProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,12 +18,15 @@ export default function RootLayout({ children }) {
     <html lang="en" >
       <body className="" >
         <Provider>
-          <ToastProvider>
-            <NavigationBar />
+          <CartProvider>
 
-            {children}
-            <Footer />
-          </ToastProvider>
+            <ToastProvider>
+              <NavigationBar />
+
+              {children}
+              <Footer />
+            </ToastProvider>
+          </CartProvider>
         </Provider>
       </body>
     </html>
