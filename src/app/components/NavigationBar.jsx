@@ -307,7 +307,7 @@ const NavigationBar = () => {
         <div className="relative">
             {/* Background overlay that applies blur and darkening effect */}
             <div
-                className={`fixed flex justify-center  items-end inset-0 z-[5] bg-gray-300  bg-opacity-70 backdrop-blur-md transition-all duration-300 ease-in-out ${isHover === mounted ? 'visible opacity-100' : 'invisible opacity-0'
+                className={`fixed flex justify-center py-32 items-end inset-0 z-[5] bg-gray-300  bg-opacity-70 backdrop-blur-md transition-all duration-300 ease-in-out ${isHover === mounted ? 'visible opacity-100' : 'invisible opacity-0'
                     }`}
                 onDragOver={handleDragOver}
                 onDrop={handleDrop}
@@ -315,7 +315,7 @@ const NavigationBar = () => {
                 {isHover === 2 && cart.length > 0 && (
                     <div className="w-fit h-fit relative  flex flex-col items-center animate-slideinnav">
                         <div
-                            className={`w-[5vh] bg-red-600 absolute  h-[3px] transition-transform duration-300 ${isDragging ? "rotate-[90deg] top-[-25px]" : "rotate-0 top-[5px]"
+                            className={`w-[5vh] bg-red-600 absolute  h-[3px] transition-transform duration-300 ${isDragging ? "rotate-[90deg] top-[-25px]" : "rotate-0 top-[5px] max-lg:top-[7.5px]"
                                 }`}
                         ></div>
                         <PiTrashSimpleThin className={`text-red-600 w-[20vh] h-[10vh] transition-transform duration-300 ${isDragging ? "rotate-[-45deg]" : "rotate-0"}`} />
