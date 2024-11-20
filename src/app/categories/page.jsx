@@ -1,7 +1,7 @@
 "use client";
 import { Button, Input } from "@nextui-org/react";
 import Link from "next/link";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { GiEmptyWoodBucketHandle } from "react-icons/gi";
 import { useToast } from "../contexts/CustomToast";
@@ -12,7 +12,6 @@ import { AiOutlineShopping } from "react-icons/ai";
 const Categories = () => {
     const router = useRouter();
     const pathname = usePathname();
-    const searchParams = useSearchParams();
     const [category, setCategory] = useState("");
     const [categories, setCategories] = useState([]);
     const { showToast } = useToast();
@@ -97,11 +96,6 @@ const Categories = () => {
             showToast(`${product.name} added to your cart!`);
         }
     };
-
-    useEffect(() => {
-        const initialCategory = searchParams.get("category") || "";
-        setCategory(initialCategory);
-    }, [searchParams]);
 
     useEffect(() => {
         fetchCategories();
