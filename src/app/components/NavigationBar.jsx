@@ -96,6 +96,7 @@ const NavigationBar = () => {
     const handleDragStart = (e, item) => {
         e.dataTransfer.setData("cartItemId", item.mainId || item._id);
         setIsDragging(true); // Start rotation
+
     };
 
     const handleDragOver = (e) => {
@@ -112,6 +113,46 @@ const NavigationBar = () => {
         await handleRemoveItem(cartItemId); // Call your remove item function
         setIsDragging(false); // Stop rotation
 
+    };
+
+    const handleTouchStart = (e, item) => {
+        e.stopPropagation();
+        setIsDragging(true);
+        e.target.style.position = "absolute";
+        // e.target.style.zIndex = "10"; // Set maximum z-index during touch
+
+        // Store the initial touch position to calculate movement
+        e.target.dataset.cartItemId = item.mainId || item._id;
+        e.target.dataset.startX = e.touches[0].clientX - e.target.getBoundingClientRect().left;
+        e.target.dataset.startY = e.touches[0].clientY - e.target.getBoundingClientRect().top;
+    };
+
+    const handleTouchMove = (e) => {
+        e.preventDefault(); // Prevent default scrolling behavior
+
+        const touch = e.touches[0];
+        const target = e.target;
+
+        // Move the element with the touch
+        const startX = parseFloat(target.dataset.startX);
+        const startY = parseFloat(target.dataset.startY);
+
+        target.style.left = `${touch.clientX - startX}px`;
+        target.style.top = `${touch.clientY - startY}px`;
+    };
+
+    const handleTouchEnd = async (e) => {
+        e.preventDefault();
+        const cartItemId = e.target.dataset.cartItemId;
+
+        // Reset styles after touch ends
+        e.target.style.position = "initial";
+        // e.target.style.zIndex = "1"; // Reset z-index to default
+
+        if (cartItemId) {
+            await handleRemoveItem(cartItemId); // Remove item if needed
+        }
+        setIsDragging(false); // Stop dragging indication
     };
 
 
@@ -178,9 +219,9 @@ const NavigationBar = () => {
         return (
             <div
                 className={`w-full h-fit absolute top-[80px] bg-white text-[#E8836B] z-[4] transition-all duration-500 ease-in-out transform ${isHover === mounted ? "max-h-[500px] opacity-100 translate-y-0" : "max-h-0 opacity-0 translate-y-[-20px]"
-                    } overflow-hidden`}
+                    }`}
                 onMouseEnter={() => hover(isHover)}
-                onMouseLeave={leave}
+                onMouseLeave={isHover === 2 && cart.length > 0 ? null : leave}
             >
                 {isHover === 0 ? (
                     <div className="p-7 h-[10%] gap-5 w-full flex animate-slideinnav">
@@ -235,29 +276,37 @@ const NavigationBar = () => {
                             <HiMiniShoppingCart className="w-[35vh] h-[35vh] max-lg:w-[10vh] flex-[0.2]" />
                             <IoArrowUpSharp className="w-8 h-8 absolute rotate-45 bottom-0 right-0 transform transition-transform group-hover:-translate-y-3" />
                         </Link>
-                        <div className=" flex overflow-x-auto w-full p-5 items-center gap-10">
+                        <div className="flex overflow-visible w-full p-5 items-center gap-10">
                             {cart.length > 0 ? cart.map((item) => (
                                 <div
                                     key={item._id}
                                     className="w-fit h-fit shrink-0"
                                     draggable
                                     onDragStart={(e) => handleDragStart(e, item)}
-                                    onDragEnd={handleDragEnd} // Reset rotation when dragging stops
-
+                                    onDragEnd={handleDragEnd}
+                                    onTouchStart={(e) => handleTouchStart(e, item)}
+                                    onTouchMove={handleTouchMove}
+                                    onTouchEnd={handleTouchEnd}
                                 >
                                     <p className="text-gray-500 font-bold text-center">Drag Me</p>
                                     <p className="text-gray-500 font-extralight text-center">Quantity: {item.quantity}</p>
                                     <img
                                         src={item.imageUrl}
                                         alt={item.name}
-                                        className="cursor-grab border-[#E8836B] border-2 aspect-square w-[20vh] max-lg:w-[10vh] max-lg:h-[10vh] rounded-lg h-[20vh]"
+                                        className={`${isDragging ? "cursor-grabbing" : "cursor-grab"} border-[#E8836B] border-2 aspect-square w-[20vh] max-lg:w-[10vh] max-lg:h-[10vh] rounded-lg h-[20vh]`}
                                     />
                                 </div>
-                            )) : <div className="w-full flex justify-center"><h1 className="text-center text-5xl text-gray-500 flex"><GiEmptyWoodBucketHandle />Your cart is empty<GiEmptyWoodBucketHandle /></h1></div>}
-
-
-
+                            )) : (
+                                <div className="w-full flex justify-center">
+                                    <h1 className="text-center text-5xl text-gray-500 flex">
+                                        <GiEmptyWoodBucketHandle />
+                                        Your cart is empty
+                                        <GiEmptyWoodBucketHandle />
+                                    </h1>
+                                </div>
+                            )}
                         </div>
+
                     </div>
                 ) : null}
             </div>
@@ -307,7 +356,7 @@ const NavigationBar = () => {
         <div className="relative">
             {/* Background overlay that applies blur and darkening effect */}
             <div
-                className={`fixed flex justify-center py-32 items-end inset-0 z-[5] bg-gray-300  bg-opacity-70 backdrop-blur-md transition-all duration-300 ease-in-out ${isHover === mounted ? 'visible opacity-100' : 'invisible opacity-0'
+                className={`fixed flex justify-center py-32 items-end inset-0 z-[1] bg-gray-300  bg-opacity-70 backdrop-blur-md transition-all duration-300 ease-in-out ${isHover === mounted ? 'visible opacity-100' : 'invisible opacity-0'
                     }`}
                 onDragOver={handleDragOver}
                 onDrop={handleDrop}
