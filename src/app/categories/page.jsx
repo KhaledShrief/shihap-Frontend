@@ -1,21 +1,22 @@
 "use client";
 import { Button, Input } from "@nextui-org/react";
 import Link from "next/link";
-import { useRouter, usePathname } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useSearchParams, useRouter } from "next/navigation"; // Import useRouter
+import { Suspense, useCallback, useEffect, useState } from "react";
 import { GiEmptyWoodBucketHandle } from "react-icons/gi";
 import { useToast } from "../contexts/CustomToast";
 import { SearchIcon } from "../order/SearchIcon";
+
 import { FiShoppingCart } from "react-icons/fi";
 import { AiOutlineShopping } from "react-icons/ai";
 
-const Categories = () => {
-    const router = useRouter();
-    const pathname = usePathname();
-    const [category, setCategory] = useState("");
+const CategoriesComponent = () => {
+    const searchParams = useSearchParams();
+    const router = useRouter(); // Initialize router
+    const category = searchParams.get("category"); // Extract 'category' from query parameters
     const [categories, setCategories] = useState([]);
-    const { showToast } = useToast();
-    const [search, setSearch] = useState("");
+    const { showToast } = useToast(); // Access showToast from context
+    const [search, setSearch] = useState("")
     const filters = [
         { id: 1, name: "All" },
         { id: 2, name: "Perfumes" },
@@ -32,11 +33,11 @@ const Categories = () => {
         try {
             const query = new URLSearchParams();
             if (category) query.append("category", category);
-            if (search) query.append("name", search);
+            if (search) query.append("name", search); // Include 'name' search term
 
             const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/categories?${query.toString()}`, {
-                method: "GET",
-                headers: { "Content-Type": "application/json" },
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
             });
 
             if (response.ok) {
@@ -46,15 +47,21 @@ const Categories = () => {
                 console.error("Failed to fetch categories:", response.status);
             }
         } catch (error) {
-            console.error("Error fetching data:", error);
+            console.error('Error fetching data:', error);
         }
     };
 
+    // Update the URL with the selected category and fetch new products
     const handleClick = (selectedCategory) => {
-        const formattedCategory = selectedCategory.toLowerCase().replace(/\s+/g, "-");
-        setCategory(formattedCategory === "all" ? "" : formattedCategory);
-        router.push(`${pathname}?category=${formattedCategory}`);
+        let formattedCategory = selectedCategory.toLowerCase().replace(/\s+/g, '-');
+        const newSearchParams = new URLSearchParams(searchParams);
+        newSearchParams.set("category", formattedCategory === "all" ? "" : formattedCategory); // Set to empty string if "All" is selected
+        router.push(`/categories?${newSearchParams.toString()}`);
     };
+
+    useEffect(() => {
+        fetchCategories();
+    }, [category, search]); // Trigger useEffect when category or search changes
 
     const addToCart = async (product) => {
         const localCart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -74,16 +81,17 @@ const Categories = () => {
         if (token) {
             try {
                 const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/cart`, {
-                    method: "POST",
+                    method: 'POST',
                     headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
                     },
-                    body: JSON.stringify({ productId: product._id, quantity: 1 }),
+                    body: JSON.stringify({ productId: product._id, quantity: 1 })
                 });
 
                 if (response.ok) {
                     showToast(`${product.name} added to your cart!`);
+
                 } else {
                     console.error("Failed to update cart in database.");
                 }
@@ -97,34 +105,35 @@ const Categories = () => {
         }
     };
 
+    const onClear = useCallback(() => {
+        setSearch("")
+    }, [])
+    const handleSearch = useCallback((value) => {
+        setSearch(value);
+    }, []);
     useEffect(() => {
-        fetchCategories();
-    }, [category, search]);
-
+        console.log(search)
+    }, [search])
     return (
-        <div className="h-full w-full flex pt-[80px] bg-white bg-cover">
-            <div className="w-full h-full p-5 flex-col gap-3 text-white flex">
-                <div className="w-full h-fit border-2 shadow-2xl rounded-lg p-5 flex flex-col gap-2 items-center justify-center">
+        <div className="h-full w-full  flex pt-[80px] bg-white bg-cover">
+            <div className="w-full h-full   p-5 flex-col gap-3 text-white flex">
+                <div className="w-full h-fit border-2 shadow-2xl   rounded-lg p-5 flex flex-col gap-2 items-center justify-center">
                     <div className="flex gap-2 items-center p-5 w-full h-fit">
-                        <Input
-                            variant="bordered"
-                            color="danger"
-                            className="w-full h-fit transition-all duration-500 shadow-2xl rounded-2xl border-1 border-[#E8836B] text-black text-xl font-extrabold"
+                        <Input variant="bordered" color="danger" className="w-full h-fit transition-all duration-500 shadow-2xl rounded-2xl border-1 border-[#E8836B] text-black text-xl font-extrabold"
                             startContent={<SearchIcon />}
                             isClearable
                             value={search}
-                            onValueChange={setSearch}
-                            onClear={() => setSearch("")}
-                            placeholder="Search By Name..."
-                        />
+                            onValueChange={handleSearch}
+                            onClear={() => onClear()}
+                            placeholder="Search By Name..." />
                     </div>
-                    <div className="flex gap-2 items-center p-5 w-full max-w-full overflow-x-auto justify-center max-lg:justify-start h-fit">
+                    <div className="flex gap-2 items-center p-5 w-full max-w-full overflow-x-auto justify-center h-fit">
                         {filters.map((filter) => (
                             <Button
                                 key={filter.id}
                                 variant="flat"
                                 onClick={() => handleClick(filter.name)}
-                                className={`${filter.name.toLowerCase().replace(/\s+/g, "-") === category ? "border-5 border-red-300" : "border-0"} w-fit p-5 bg-[#E8836B] text-[#fff] h-fit`}
+                                className={`${filter.name.toLowerCase().replace(/\s+/g, '-') === (category || '').toLowerCase().replace(/\s+/g, '-') ? "border-5 border-red-300" : "border-0"} w-fit p-5 bg-[#E8836B] text-[#fff] h-fit`}
                             >
                                 {filter.name}
                             </Button>
@@ -140,13 +149,17 @@ const Categories = () => {
                                         <img src={card.imageUrl} className="h-[300px] w-full rounded-tr-2xl rounded-tl-2xl" />
                                         <div className="p-5">
                                             <p className="font-thin text-gray-500">{card.name}</p>
-                                            <p className="font-semibold text-gray-600">LE {card.price} EGP</p>
+                                            <p className=" font-semibold text-gray-600">LE {card.price} EGP</p>
                                         </div>
                                     </div>
                                 </Link>
                                 <div className="w-full h-fit flex p-5 flex-col gap-2 justify-center items-end">
                                     <Link href={`/buy/${card._id}`} className="w-full h-fit">
-                                        <Button variant="solid" className="bg-[#E8836B] w-full text-[#fff] p-6" startContent={<AiOutlineShopping />}>
+                                        <Button
+                                            variant="solid"
+                                            className="bg-[#E8836B] w-full text-[#fff] p-6"
+                                            startContent={<AiOutlineShopping />}
+                                        >
                                             Buy Now
                                         </Button>
                                     </Link>
@@ -155,6 +168,7 @@ const Categories = () => {
                                         className="bg-[#E8836B] w-full text-[#fff] p-6"
                                         onClick={() => addToCart(card)}
                                         startContent={<FiShoppingCart />}
+
                                     >
                                         Add to Cart
                                     </Button>
@@ -168,10 +182,19 @@ const Categories = () => {
                             <GiEmptyWoodBucketHandle />
                         </p>
                     )}
+
                 </div>
             </div>
         </div>
     );
 };
 
+const Categories = () => {
+    return (
+        <Suspense fallback={`loading`}>
+            <CategoriesComponent />
+        </Suspense>
+
+    )
+}
 export default Categories;

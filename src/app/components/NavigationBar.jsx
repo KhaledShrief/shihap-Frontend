@@ -219,7 +219,7 @@ const NavigationBar = () => {
         return (
             <div
                 className={`w-full h-fit absolute top-[80px] bg-white text-[#E8836B] z-[4] transition-all duration-500 ease-in-out transform ${isHover === mounted ? "max-h-[500px] opacity-100 translate-y-0" : "max-h-0 opacity-0 translate-y-[-20px]"
-                    }`}
+                    } overflow-visible`}
                 onMouseEnter={() => hover(isHover)}
                 onMouseLeave={isHover === 2 && cart.length > 0 ? null : leave}
             >
