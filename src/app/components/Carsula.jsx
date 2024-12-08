@@ -1,4 +1,4 @@
-
+"use client"
 import { Button } from "@nextui-org/react";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
@@ -106,7 +106,7 @@ const Carsula = ({ products, addToCart }) => {
                     {products.map((card) => (
                         <div
                             key={card._id}
-                            className="flex-shrink-0 flex shadow-xl flex-col min-h-[500px] w-[270px] bg-[#fce8e4] h-fit rounded-2xl border border-[#fdebdb]"
+                            className="flex-shrink-0 flex shadow-xl flex-col min-h-[500px] w-[270px] bg-pink-50 h-fit rounded-2xl border border-[#fdebdb]"
                         >
                             <Link href={`/product/${card._id}`} passHref>
                                 <div className="cursor-pointer">
@@ -121,7 +121,7 @@ const Carsula = ({ products, addToCart }) => {
                                 <Link href={`/buy/${card._id}`} className="w-full h-fit">
                                     <Button
                                         variant="solid"
-                                        className="bg-[#E8836B] w-full text-[#fff] p-6"
+                                        className="bg-gray-700 w-full text-[#fff] p-6"
                                         startContent={<AiOutlineShopping />}
                                     >
                                         Buy Now
@@ -129,7 +129,7 @@ const Carsula = ({ products, addToCart }) => {
                                 </Link>
                                 <Button
                                     variant="solid"
-                                    className="bg-[#E8836B] w-full text-[#fff] p-6"
+                                    className="bg-gray-700 w-full text-[#fff] p-6"
                                     onClick={() => addToCart(card)}
                                     startContent={<FiShoppingCart />}
                                 >
@@ -153,7 +153,7 @@ const Carsula = ({ products, addToCart }) => {
                     <IoMdArrowDropright className="w-8 h-8 text-gray-400 cursor-pointer" onClick={scrollRight} />
                 </div>
                 <Link href={`/categories`}>
-                    <Button variant="solid" className="bg-[#E8836B] text-[#fff]">View All</Button>
+                    <Button variant="solid" className="bg-gray-700 text-[#fff]">View All</Button>
                 </Link>
             </div>
         </>

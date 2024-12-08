@@ -32,14 +32,14 @@ const Footer = () => {
         fetchUser();
     }, []);
     return (<>
-        <div className="p-10 w-full bg-[#E8836B] text-red-300 bg-cover h-[500px]  flex flex-col">
-            <section className="w-full h-full flex text-[#ddd]  gap-1">
-                <div className="px-10 max-lg:px-5 h-full w-full flex font-serif text-pretty flex-col gap-5">
+        <div className="p-10 w-full bg-pink-50 text-red-300 bg-cover h-[500px]  flex flex-col">
+            <section className="w-full h-full flex text-gray-500  gap-1">
+                <div className="px-10 max-lg:px-5 h-full w-full flex font-bold text-pretty flex-col gap-5">
                     <img src="/logo.png" className="h-[100px] w-[100px] " alt="logo" />
-                    <p>Inspired by natural beauty, Favelin represents a minimalist, clean approach to local beauty scene.</p>
+                    <p>Inspired by natural beauty, Elora represents a minimalist, clean approach to local beauty scene.</p>
                     <p>Contact Us on:</p>
                     <p>01030451520</p>
-                    <div className="flex gap-3 text-white">
+                    <div className="flex gap-3 text-gray-500">
                         <FaFacebook className="w-5 h-5 cursor-pointer hover:scale-110 transition-all duration-300" />
                         <FaInstagram className="w-5 h-5 cursor-pointer hover:scale-110 transition-all duration-300" />
                         <FaYoutube className="w-5 h-5 cursor-pointer hover:scale-110 transition-all duration-300" />
@@ -47,7 +47,7 @@ const Footer = () => {
 
                     </div>
                 </div>
-                <div className="px-10 max-lg:px-5 h-full w-full flex font-serif text-pretty flex-col gap-2">
+                <div className="px-10 max-lg:px-5 h-full w-full flex font-bold text-pretty flex-col gap-2">
                     <h1 >Shop</h1>
                     <Link href="/">
                         <h1 className="hover:underline">Home</h1>
@@ -65,7 +65,7 @@ const Footer = () => {
             </section>
 
         </div>
-        <section className="border-t-1 border-red-300 w-full h-full flex text-[#ddd] p-7 px-20 items-center justify-between bg-[#E8836B]">
+        <section className="border-t-1 border-gray-500 w-full h-full flex text-black p-7 px-20 items-center justify-between bg-pink-50">
             <p className="text-[10px]">© 2024, Elora Powered by DevTech.co</p>
 
             {isLoggedIn && user._id === process.env.NEXT_PUBLIC_MAIN_USER ?
@@ -73,7 +73,7 @@ const Footer = () => {
                     <DropdownTrigger>
                         <Button
                             variant="bordered"
-                            className="max-lg:ml-2 max-lg:text-[10px] max-lg:w-[10px] max-lg:h-[30px]"
+                            className="max-lg:ml-2 max-lg:text-[10px] max-lg:w-[10px] max-lg:h-[30px] relative z-0"
                         >
                             Edit
                         </Button>

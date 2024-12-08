@@ -218,7 +218,7 @@ const NavigationBar = () => {
     const content = () => {
         return (
             <div
-                className={`w-full h-fit absolute top-[80px] bg-white text-[#E8836B] z-[4] transition-all duration-500 ease-in-out transform ${isHover === mounted ? "max-h-[500px] opacity-100 translate-y-0" : "max-h-0 opacity-0 translate-y-[-20px]"
+                className={`w-full h-fit absolute top-[80px] bg-white text-gray-500 z-[4] transition-all duration-500 ease-in-out transform ${isHover === mounted ? "max-h-[500px] opacity-100 translate-y-0" : "max-h-0 opacity-0 translate-y-[-20px]"
                     } overflow-visible`}
                 onMouseEnter={() => hover(isHover)}
                 onMouseLeave={isHover === 2 && cart.length > 0 ? null : leave}
@@ -293,7 +293,7 @@ const NavigationBar = () => {
                                     <img
                                         src={item.imageUrl}
                                         alt={item.name}
-                                        className={`${isDragging ? "cursor-grabbing" : "cursor-grab"} border-[#E8836B] border-2 aspect-square w-[20vh] max-lg:w-[10vh] max-lg:h-[10vh] rounded-lg h-[20vh]`}
+                                        className={`${isDragging ? "cursor-grabbing" : "cursor-grab"} border-gray-500 border-2 aspect-square w-[20vh] max-lg:w-[10vh] max-lg:h-[10vh] rounded-lg h-[20vh]`}
                                     />
                                 </div>
                             )) : (
@@ -374,10 +374,10 @@ const NavigationBar = () => {
             </div>
 
             <div className="w-full fixed top-0 z-[10]">
-                <nav className="w-full h-[80px] bg-white text-[#E8836B] flex flex-col px-20  ">
-                    <div className="flex items-center justify-between px-10 h-full w-full border-b-2 border-[#E8836B]">
+                <nav className="w-full h-[80px] bg-white text-gray-500 flex flex-col px-20  ">
+                    <div className="flex items-center justify-between px-10 h-full w-full border-b-2 border-gray-500">
                         <div className="w-fit h-fit">
-                            {/* <img src="/logo.png" className="h-[60px] w-[100px] max-lg:w-[50px] max-lg:h-[50px] max-lg:absolute max-lg:left-5 max-lg:top-5" alt="logo" /> */}
+                            <img src="/logo.png" className="h-[60px] w-[50px] max-lg:w-[50px] max-lg:h-[50px] max-lg:absolute max-lg:left-5 max-lg:top-5" alt="logo" />
                         </div>
                         <div className="flex items-center max-lg:gap-2 gap-10 w-fit max-lg:relative max-lg:left-[-20px] h-full">
                             {items.map((item, index) => (

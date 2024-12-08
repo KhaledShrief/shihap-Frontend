@@ -85,7 +85,7 @@ const Cart = () => {
             <div className="w-[70%] h-full max-lg:w-full bg-white p-5 flex-col gap-3  justify-center text-black flex ">
                 <div className="w-full h-fit  max-lg:px-10 p-5 flex justify-between items-center">
                     <h1 className="text-5xl font-serif text-gray-700"> Your Cart</h1>
-                    <Link href="/" className="text-[#E8836B] underline text-2xl font-serif">Continue Shopping</Link>
+                    <Link href="/" className="text-gray-500 underline text-2xl font-serif">Continue Shopping</Link>
                 </div>
                 <div className="w-full h-fit  flex justify-between items-center">
                     <div className="flex-[0.75] px-2  font-extralight  flex justify-between">
@@ -111,7 +111,7 @@ const Cart = () => {
                                     <div className="flex h-full w-fit items-center gap-2">
 
                                         <Counter mainId={item.mainId} quantity={item.quantity} id={item._id} cart={cart} setCart={setCart} />
-                                        <button className=" bg-[#E8836B] h-fit w-fit p-3 px-3 rounded-md  text-white" onClick={() => handleRemoveItem(!isLoggedIn ? item._id : item.mainId)}>
+                                        <button className=" bg-gray-700 h-fit w-fit p-3 px-3 rounded-md  text-white" onClick={() => handleRemoveItem(!isLoggedIn ? item._id : item.mainId)}>
                                             <FaRegTrashCan />
                                         </button>
                                     </div>
@@ -138,7 +138,7 @@ const Cart = () => {
                             <p className="text-medium font-semibold text-gray-500 font-sans">Tax included. Shipping and discounts calculated at checkout.</p>
                         </div>
                         <Link href={`/buy`} className="h-fit w-full  flex">
-                            <Button variant="solid" disabled={cart.length === 0} className={`${cart.length === 0 ? "cursor-not-allowed opacity-[0.5] hover:opacity-[0.2]" : " cursor-pointer opacity-[1]"} bg-[#E8836B] text-[#fff] p-6 font-serif w-full`}>Buy Now</Button>
+                            <Button variant="solid" disabled={cart.length === 0} className={`${cart.length === 0 ? "cursor-not-allowed opacity-[0.5] hover:opacity-[0.2]" : " cursor-pointer opacity-[1]"} bg-gray-700 text-[#fff] p-6 font-serif w-full`}>Buy Now</Button>
                         </Link>
 
                     </div>

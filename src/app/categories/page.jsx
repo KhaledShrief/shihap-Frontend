@@ -119,7 +119,7 @@ const CategoriesComponent = () => {
             <div className="w-full h-full   p-5 flex-col gap-3 text-white flex">
                 <div className="w-full h-fit border-2 shadow-2xl   rounded-lg p-5 flex flex-col gap-2 items-center justify-center">
                     <div className="flex gap-2 items-center p-5 w-full h-fit">
-                        <Input variant="bordered" color="danger" className="w-full h-fit transition-all duration-500 shadow-2xl rounded-2xl border-1 border-[#E8836B] text-black text-xl font-extrabold"
+                        <Input variant="bordered" className="w-full h-fit transition-all duration-500 shadow-2xl rounded-2xl border-1  text-black text-xl font-extrabold"
                             startContent={<SearchIcon />}
                             isClearable
                             value={search}
@@ -133,7 +133,7 @@ const CategoriesComponent = () => {
                                 key={filter.id}
                                 variant="flat"
                                 onClick={() => handleClick(filter.name)}
-                                className={`${filter.name.toLowerCase().replace(/\s+/g, '-') === (category || '').toLowerCase().replace(/\s+/g, '-') ? "border-5 border-red-300" : "border-0"} w-fit p-5 bg-[#E8836B] text-[#fff] h-fit`}
+                                className={`${filter.name.toLowerCase().replace(/\s+/g, '-') === (category || '').toLowerCase().replace(/\s+/g, '-') ? "border-5 border-gray-800" : "border-0"} w-fit p-5 bg-gray-700 text-[#fff] h-fit`}
                             >
                                 {filter.name}
                             </Button>
@@ -143,7 +143,7 @@ const CategoriesComponent = () => {
                 <div className="w-full h-full p-5 flex-wrap justify-center gap-3 text-white flex">
                     {categories.length > 0 ? (
                         categories.map((card) => (
-                            <div key={card._id} className="flex-shrink-0 flex shadow-xl flex-col min-h-[500px] w-[270px] bg-[#fce8e4] h-fit rounded-2xl border border-[#fdebdb]">
+                            <div key={card._id} className="flex-shrink-0 flex shadow-xl flex-col min-h-[500px] w-[270px] bg-pink-50 h-fit rounded-2xl border border-[#fdebdb]">
                                 <Link href={`/product/${card._id}`} passHref>
                                     <div className="cursor-pointer">
                                         <img src={card.imageUrl} className="h-[300px] w-full rounded-tr-2xl rounded-tl-2xl" />
@@ -157,7 +157,7 @@ const CategoriesComponent = () => {
                                     <Link href={`/buy/${card._id}`} className="w-full h-fit">
                                         <Button
                                             variant="solid"
-                                            className="bg-[#E8836B] w-full text-[#fff] p-6"
+                                            className="bg-gray-700 w-full text-[#fff] p-6"
                                             startContent={<AiOutlineShopping />}
                                         >
                                             Buy Now
@@ -165,7 +165,7 @@ const CategoriesComponent = () => {
                                     </Link>
                                     <Button
                                         variant="solid"
-                                        className="bg-[#E8836B] w-full text-[#fff] p-6"
+                                        className="bg-gray-700 w-full text-[#fff] p-6"
                                         onClick={() => addToCart(card)}
                                         startContent={<FiShoppingCart />}
 

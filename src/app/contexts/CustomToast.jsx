@@ -36,7 +36,7 @@ export const ToastProvider = ({ children }) => {
         <ToastContext.Provider value={{ showToast }}>
             {children}
             {isVisible && (
-                <div className="fixed top-24 right-4 bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg transition-transform transform scale-100 hover:scale-150 flex items-center animate-slide">
+                <div className="fixed top-24 right-4 z-50 bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg transition-transform transform scale-100 hover:scale-150 flex items-center animate-slide">
                     <span>{toastMessage}</span>
                     <button onClick={closeToast} className="ml-4 text-white font-bold">
                         X
