@@ -43,7 +43,9 @@ const Carsula = ({ products, addToCart }) => {
     };
 
     const scrollLeft = () => {
-        const swipeDistance = window.innerWidth < 768 ? 290 : cardWidth * visibleCards; // Adjust swipe distance based on screen size
+        const cardReal = cardWidth * 0.872
+
+        const swipeDistance = cardReal * visibleCards; // Adjust swipe distance based on screen size
         setMarginLeft((prevMargin) => {
             const newMargin = Math.min(prevMargin + swipeDistance, 0);
             updateAvailableSwaps();
@@ -52,7 +54,8 @@ const Carsula = ({ products, addToCart }) => {
     };
 
     const scrollRight = () => {
-        const swipeDistance = window.innerWidth < 768 ? 290 : cardWidth * visibleCards;
+        const cardReal = cardWidth * 0.872
+        const swipeDistance = cardReal * visibleCards;
         setMarginLeft((prevMargin) => {
             const newMargin = Math.max(prevMargin - swipeDistance, maxMarginLeft);
 
