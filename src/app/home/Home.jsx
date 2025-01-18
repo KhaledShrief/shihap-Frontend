@@ -4,6 +4,7 @@ import { FaWhatsapp } from "react-icons/fa6";
 import { useToast } from "../contexts/CustomToast";
 
 import Carsula from "../components/Carsula";
+import { Image } from "@nextui-org/react";
 
 export function Home({ products }) {
     // const [products, setProducts] = useState([]);
@@ -62,7 +63,7 @@ export function Home({ products }) {
                 <FaWhatsapp className="w-5 h-5 cursor-pointer text-white hover:scale-110 transition-all duration-300" />
             </a>
             <section className="w-full h-fit  relative">
-                <img src="/two.jpg" className="bg-cover" />
+                <Image src="/two.jpg" className="bg-cover z-0 rounded-none" />
                 <div className="w-[50%] absolute animate-slidein z-[2] max-lg:w-full max-lg:top-1 left-0 gap-5 p-10 top-20 flex flex-col h-fit">
                     <h1 className="text-white text-[8vh] max-lg:text-[15px] font-extrabold">Welcome To Elora Store</h1>
                     <p className="text-[#ddd] text-[20px] max-lg:text-[10px] p-5 font-bold">
@@ -85,71 +86,71 @@ export function Home({ products }) {
                 <div className="grid grid-cols-5 gap-4 p-4   justify-center items-center">
                     {/* First large image */}
                     <div className="col-span-2 row-span-2">
-                        <img
+                        <Image
                             src="/p1.jpg"
                             alt="Image 1"
-                            className="w-full h-full object-cover"
+                            className="w-full h-full rounded-none z-0 object-cover"
                         />
                     </div>
 
                     {/* Second image */}
                     <div className="col-span-1 row-span-1">
-                        <img
+                        <Image
                             src="/p2.jfif"
                             alt="Image 2"
-                            className="w-full h-full object-cover"
+                            className="w-full h-full rounded-none z-0 object-cover"
                         />
                     </div>
 
                     {/* Third image */}
                     <div className="col-span-1 row-span-1">
-                        <img
+                        <Image
                             src="/p3.jfif"
                             alt="Image 3"
-                            className="w-full h-full object-cover"
+                            className="w-full h-full  rounded-none z-0 object-cover"
                         />
                     </div>
                     <div className="col-span-1 row-span-1">
-                        <img
+                        <Image
                             src="/p4.jfif"
                             alt="Image 3"
-                            className="w-full h-full object-cover"
+                            className="w-full h-full rounded-none z-0 object-cover"
                         />
                     </div>
                     <div className="col-span-1 row-span-1">
-                        <img
+                        <Image
                             src="/p4.jfif"
                             alt="Image 3"
-                            className="w-full h-full object-cover"
+                            className="w-full h-full rounded-none z-0 object-cover"
                         />
                     </div>
 
                     <div className="col-span-2 row-span-2">
-                        <img
+                        <Image
                             src="/p1.jpg"
                             alt="Image 1"
-                            className="w-full h-full object-cover"
+                            className="w-full h-full rounded-none z-0 object-cover"
                         />
                     </div>
                     <div className="col-span-1 row-span-1">
-                        <img
+                        <Image
                             src="/p3.jfif"
                             alt="Image 3"
-                            className="w-full h-full object-cover"
+                            className="w-full h-full rounded-none z-0 object-cover"
                         />
                     </div>
                     <div className="col-span-1 row-span-1">
-                        <img
+                        <Image
                             src="/p2.jfif"
                             alt="Image 3"
-                            className="w-full h-full object-cover"
+                            className="w-full h-full rounded-none z-0 object-cover"
                         />
                     </div>
                     <div className="col-span-1 row-span-1">
-                        <img
+                        <Image
                             src="/p3.jfif"
                             alt="Image 3"
-                            className="w-full h-full object-cover"
+                            className="w-full h-full rounded-none z-0 object-cover"
                         />
                     </div>
                 </div>

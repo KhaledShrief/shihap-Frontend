@@ -5,7 +5,7 @@ import { FaFacebook } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
 import { IoLogoTiktok } from "react-icons/io5";
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react";
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button, Image } from "@nextui-org/react";
 
 const Footer = () => {
     const [user, setUser] = useState({});
@@ -35,7 +35,7 @@ const Footer = () => {
         <div className="p-10 w-full bg-pink-50 text-red-300 bg-cover h-[500px]  flex flex-col">
             <section className="w-full h-full flex text-gray-500  gap-1">
                 <div className="px-10 max-lg:px-5 h-full w-full flex font-bold text-pretty flex-col gap-5">
-                    <img src="/logo.png" className="h-[100px] w-[100px] " alt="logo" />
+                    <Image src="/logo.png" width={100} height={100} alt="logo" />
                     <p>Inspired by natural beauty, Elora represents a minimalist, clean approach to local beauty scene.</p>
                     <p>Contact Us on:</p>
                     <p>01030451520</p>
