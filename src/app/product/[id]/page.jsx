@@ -94,9 +94,9 @@ const Product = ({ params }) => {
                 </p>
                 <div className="flex gap-2 justify-center flex-col p-10 w-full h-fit">
 
-                    <Button variant="solid" className="bg-[#e8836b] text-[#fff] p-6 font-serif" onClick={() => addToCart(product)}>Add to Cart</Button>
+                    <Button variant="solid" className="bg-gray-700 text-[#fff] p-6 font-serif" onClick={() => addToCart(product)}>Add to Cart</Button>
                     <Link href={`/buy/${product._id}`} className="h-fit w-full  flex">
-                        <Button variant="solid" className="bg-[#E8836B] text-[#fff] p-6 font-serif w-full">Buy Now</Button>
+                        <Button variant="solid" className="bg-gray-700 text-[#fff] p-6 font-serif w-full">Buy Now</Button>
                     </Link>
                 </div>
                 <p>{product.description}</p>
